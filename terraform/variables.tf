@@ -1,7 +1,14 @@
 # Azure variables
 variable "subscription_id" {
-  description = "The subscription ID for the Azure provider"
+  description = "The subscription ID for the Azure provider."
   type        = string
+}
+
+# Random ID for unique resource names
+variable "random_id" {
+  description = "A random ID that will be used to create unique names for resources."
+  type        = string
+  default     = ""
 }
 
 # ACR variables
