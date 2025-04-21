@@ -39,6 +39,10 @@ terraform apply -var="subscription_id=$(az account show --query id --output tsv)
 
 This will take a couple of minutes to run. Make sure your screen doesn't time out!
 
+> [!IMPORTANT]
+> When the deployment is done, take a note of the "output" values.
+> This workshop assumes you used the default values the random_id `[[ Instruqt-Var key="randomid" hostname="cloud-client" ]]`
+
 ## What are we deploying?
 ===
 
