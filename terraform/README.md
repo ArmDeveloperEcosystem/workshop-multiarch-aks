@@ -4,17 +4,17 @@ This document provides an overview of the different Terraform files in this fold
 
 ## Files
 
-### `main.tf`
+### `providers.tf`
 
-This file contains the primary configuration for the Terraform project. It defines the Azure resource group that will be used by Terraform.
+This file contains the configuration for the Terraform project and which provider versions to use.
 
 ### `variables.tf`
 
 This file defines the input variables for the Terraform project. It allows you to parameterize the configuration and make it more flexible.
 
-### `outputs.tf`
+### `main.tf`
 
-This file specifies the outputs of the Terraform project. Outputs values that are created by Terraform and can then be displayed to the user, or copied to other platforms like GitHub Actions.
+This file contains the primary configuration for the Terraform project. It defines the Azure resource group that will be used by Terraform.
 
 ### `acr.tf`
 
@@ -24,9 +24,9 @@ This file configures the Azure Container Registry (ACR) resource. It defines the
 
 This file sets up the Azure Kubernetes Service (AKS) resources. It defines the AKS cluster and node groups, enabling the deployment and management of containerized applications on Kubernetes.
 
-### `providers.tf`
+### `outputs.tf`
 
-This file contains the configuration for the Terraform project and which provider versions to use.
+This file specifies the outputs of the Terraform project. Outputs values that are created by Terraform and can then be displayed to the user, or copied to other platforms like GitHub Actions.
 
 ## Usage
 
