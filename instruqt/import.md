@@ -1,4 +1,4 @@
-# Import into Azure Container Registry,
+# Import into Azure Container Registry
 
 Now we need to import an image of our Go application into our newly created Azure Container Registry.
 
