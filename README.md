@@ -228,7 +228,7 @@ You will of course also need access to an Azure subscription.
 
     You will now get a variety of message types back.
 
-    Some will be from the application deployments that we assigned to run on amd or arm. Others will be on the multi architectural deployment that will run on both amd and arm based compute.
+    Some will be from the application deployments that we assigned to run on amd or arm. Others will be on the multi architectural deployment that could be running on both amd and arm based compute.
 
     The load balance will automatically direct traffic to your various pods that in a real world scenario will be completely invisible to your end user.
 
