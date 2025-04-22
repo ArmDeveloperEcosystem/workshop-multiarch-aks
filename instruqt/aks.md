@@ -140,4 +140,4 @@ The load balance will automatically direct traffic to your various pods that is 
 
 This is a great example of how you can implement new architecture into your existing workloads without having to take existing services down. Then gradually change the available of your nodes as you optimize for cost and scale.
 
-To complete this workshop and clean up these resources, click the **next** button below.
+To complete this workshop and clean up these resources, click the **Next** button below.
