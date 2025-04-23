@@ -52,7 +52,7 @@ In your [Terminal tab](tab-0), write the following command to load your AKS cred
 [button label="Terminal"](tab-0)
 
 ```bash,run
-az aks get-credentials --resource-group arm-aks-demo-rg-`[[ Instruqt-Var key="randomid" hostname="cloud-client" ]] --name arm-aks-demo-cluster --overwrite-existing 
+az aks get-credentials --resource-group arm-aks-demo-rg-[[ Instruqt-Var key="randomid" hostname="cloud-client" ]] --name arm-aks-demo-cluster --overwrite-existing 
 ```
 
 > [!NOTE]
