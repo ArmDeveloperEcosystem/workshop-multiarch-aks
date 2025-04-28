@@ -1,6 +1,6 @@
 # Deploy resources via Terraform
 
-This workshop demonstrates how to deploy a multi-architectural Azure Kubernetes service with both amd and arm based nodes.
+This workshop demonstrates how to deploy a multi-architectural Azure Kubernetes service with both AMD and Arm based nodes.
 
 Through instruqt you have been given:
 
@@ -8,7 +8,8 @@ Through instruqt you have been given:
 - A terminal to work in with the required tools (git, azure cli, terraform) already installed
 
 > [!NOTE]
-> Your Azure CLI should already be configured and authorized to the correct Azure subscription.
+> Your Azure CLI should already be configured by Instruqt and authorized to the correct Azure subscription.
+> You can confirm this by running `az account show`
 
 ## Plan and apply Terraform
 ===
@@ -26,20 +27,25 @@ terraform init
 Then you can run `terraform plan` to see what we will deploy:
 
 ```bash,run
-terraform plan -var="subscription_id=$(az account show --query id --output tsv)" -var="random_id=[[ Instruqt-Var key="randomid" hostname="cloud-client" ]]"
+terraform plan -var="subscription_id=$(az account show --query id --output tsv)" -var="random_id=[[ Instruqt-Var key="randomid" hostname="cloud-client" ]]" -out tfplan
 ```
 
 We pass in two variables to the terraform. First is the current Azure subscription, and the second is a random string of characters (in your case, `[[ Instruqt-Var key="randomid" hostname="cloud-client" ]]`) which will be used to make unique resource names within Azure.
 
+You should get output that says there are no errors and shows you everything that will be deployed when you apply.
+
 ### Terraform Apply
 
-If everything looks correct, let's deploy via terraform:
+After successfully running `terraform plan`, let's apply our plan to deploy via terraform:
 
 ```bash,run
-terraform apply -var="subscription_id=$(az account show --query id --output tsv)" -var="random_id=[[ Instruqt-Var key="randomid" hostname="cloud-client" ]]"
+terraform apply tfplan
 ```
 
-This will take a couple of minutes to run. Make sure your screen doesn't time out!
+> [!WARNING]
+> Wait until deployment is complete and successful before moving on to the next challenge!
+
+This will take a few minutes to run. Instruqt may give you a prompt you "Are you still there?" due to inaction, make sure you watch the screen and interact as needed to ensure deployment finishes.
 
 > [!IMPORTANT]
 > When the deployment is done, take a note of the "output" values.

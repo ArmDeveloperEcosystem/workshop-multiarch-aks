@@ -40,7 +40,7 @@ to
 ```
 
 > [!NOTE]
-> If you did not set your `random_id` to `[[ Instruqt-Var key="randomid" hostname="cloud-client" ]]` during deployment, then you will have to edit the above line to use the actual name of your deployed Azure Container Registry.
+> Note the name of your deployed Azure Container Registry, if it is not the default `armacr[[ Instruqt-Var key="randomid" hostname="cloud-client" ]]` then edit the above line.
 
 Once the files are saved, we are ready to deploy our application on our AKS cluster.
 
@@ -56,7 +56,7 @@ az aks get-credentials --resource-group arm-aks-demo-rg-[[ Instruqt-Var key="ran
 ```
 
 > [!NOTE]
-> Once again if you did not set your `random_id` to `[[ Instruqt-Var key="randomid" hostname="cloud-client" ]]` during deployment, then you will have to edit the above line to use the actual name of your deployed resource group and AKS cluster.
+> Once again if your resource group is not the default name of `arm-aks-demo-rg-[[ Instruqt-Var key="randomid" hostname="cloud-client" ]]`, then you will have to edit the above line to use the actual name of your deployed resource group and AKS cluster.
 
 Deploy the service using `kubectl`
 
@@ -78,10 +78,19 @@ kubectl get svc
 
 You should see the hello-service we deployed, along with an external facing IP address.
 
-Copy that external IP address, and send a ping using curl:
+> [!IMPORTANT]
+> If you still see a `pending` value for the external IP address, wait a moment and try again.
 
-```bash
-curl -w '\n' http://<IP-of-your-AKS>
+Once an external IP addressed is assigned, let's save that value to a variable:
+
+```bash,run
+export IPADDRESS=$(kubectl get services hello-service --output jsonpath='{.status.loadBalancer.ingress[0].ip}')
+```
+
+Then send a ping using curl:
+
+```bash,run
+curl -w '\n' $IPADDRESS
 ```
 
 You should get a reply from that service that confirms the Go application is running, and which architecture the application is running on.
@@ -105,8 +114,8 @@ Note that these are running the same application, and your load balancer will au
 
 You can test this by sending more pings to the service:
 
-```bash
-curl -w '\n' http://<IP-of-your-AKS>
+```bash,run
+curl -w '\n' $IPADDRESS
 ```
 
 > [!NOTE]
@@ -130,8 +139,8 @@ kubectl get pods
 
 Let's run a little script to ping the service repeatedly. Insert the external IP address of your service into this line of code and run it:
 
-```bash
-for i in $(seq 1 20); do curl -w '\n' http://<IP-of-your-AKS>; done
+```bash,run
+for i in $(seq 1 20); do curl -w '\n' $IPADDRESS; done
 ```
 
 You will now get a variety of messages back. Some will be from the application deployments that we assigned to run on amd or arm. Others will be on the multi architectural deployment that could be running on both amd and arm based compute.
