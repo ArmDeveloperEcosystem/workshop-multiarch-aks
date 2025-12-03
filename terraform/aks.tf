@@ -9,7 +9,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   }
   default_node_pool {
     name       = "armpool"
-    vm_size    = "standard_d2ps_v5" # To change to: standard_b2pls_v2
+    vm_size    = "standard_b2pls_v2"
     node_count = var.agent_count
   }
   identity {
