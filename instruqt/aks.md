@@ -42,7 +42,7 @@ to
 
 In order make things easier, we are provided a simple script `update-image.sh` to do this for you. Simply run the following command:
 
-```yaml
+```bash,run
 ./update-image.sh armacr[[ Instruqt-Var key="randomid" hostname="cloud-client" ]]
 ```
 
