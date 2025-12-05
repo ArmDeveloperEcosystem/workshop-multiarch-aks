@@ -25,9 +25,7 @@ All three of these files are very similar. They deploy our application from the 
 
 `multi-arch-deployment.yaml` deploys the application to run on whatever node is available. However `arm64-deployment.yaml` and `amd64-deployment.yaml` implement an additional two lines of yaml called a `nodeSelector`, that only allows our application to run on either `arm64` or `amd64` based nodes respectively.
 
-In each file, we will need to update it to point to our ACR we were using in the previous steps.
-
-Change line 21 of all three files from:
+In each file, we will need to update line 21 of all three files to point to our ACR we were using in the previous steps:
 
 ```yaml
         image: <your deployed ACR name>.azurecr.io/multi-arch:latest
@@ -42,7 +40,15 @@ to
 > [!NOTE]
 > Note the name of your deployed Azure Container Registry, if it is not the default `armacr[[ Instruqt-Var key="randomid" hostname="cloud-client" ]]` then edit the above line.
 
-Once the files are saved, we are ready to deploy our application on our AKS cluster.
+In order make things easier, we are provided a simple script `update-image.sh` to do this for you. Simply run the following command:
+
+```yaml
+./update-image.sh armacr[[ Instruqt-Var key="randomid" hostname="cloud-client" ]]
+```
+
+You can confirm the lines were changed correctly by looking at the files in the editor tab.
+
+Once the files are updated, we are ready to deploy our application on our AKS cluster.
 
 ## Deploy initial AKS workload
 ===
