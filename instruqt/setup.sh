@@ -42,6 +42,64 @@ done
 echo "Logged in using service principal. Using Azure location: $location"
 
 ###############################################################################
+# Create Azure Policy to restrict VMSS SKUs
+###############################################################################
+echo "Creating Azure policy to restrict VMSS SKUs..."
+
+# Create policy definition
+policy_rule='{
+  "if": {
+    "allOf": [
+    {
+      "field": "type",
+      "equals": "Microsoft.Compute/virtualMachineScaleSets"
+    },
+    {
+      "not": {
+      "field": "Microsoft.Compute/virtualMachineScaleSets/sku.name",
+      "in": "[parameters('\''multiarchAllowedSKUs'\'')]"
+      }
+    }
+    ]
+  },
+  "then": {
+    "effect": "Deny"
+  }
+}'
+az policy definition create \
+  --name "restrict-vmss-skus" \
+  --display-name "Restrict Virtual Machine Scale Sets SKUs" \
+  --description "Restricts VMSS to only use allowed SKUs for multiarch workshop" \
+  --mode "Indexed" \
+  --rules "$policy_rule" \
+  --params '{
+  "multiarchAllowedSKUs": {
+    "type": "Array",
+    "metadata": {
+    "displayName": "Allowed Size SKUs",
+    "description": "The list of size SKUs that can be specified for VMSS.",
+    "strongType": "VMSKUs"
+    }
+  }
+}'
+
+# Assign policy to subscription
+az policy assignment create \
+  --name "restrict-vmss-skus-assignment" \
+  --display-name "Restrict VMSS SKUs Assignment" \
+  --policy "restrict-vmss-skus" \
+  --params '{
+    "multiarchAllowedSKUs": {
+      "value": [
+        "standard_b2pls_v2",
+        "standard_a2_v2"
+      ]
+    }
+  }'
+
+echo "Azure policy created and assigned successfully."
+
+###############################################################################
 # Clone Git repo
 ###############################################################################
 git clone https://github.com/ArmDeveloperEcosystem/workshop-multiarch-aks.git multiarch
