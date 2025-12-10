@@ -100,6 +100,47 @@ az policy assignment create \
 echo "Azure policy created and assigned successfully."
 
 ###############################################################################
+# Create Azure Policy to restrict standalone VM deployments (only allow AKS nodes)
+###############################################################################
+echo "Creating Azure policy to restrict standalone VM deployments..."
+
+# Create policy definition for standalone VM restriction
+vm_policy_rule='{
+  "if": {
+    "allOf": [
+      {
+        "field": "type",
+        "equals": "Microsoft.Compute/virtualMachines"
+      },
+      {
+        "not": {
+          "value": "[resourceGroup().name]",
+          "like": "MC_*"
+        }
+      }
+    ]
+  },
+  "then": {
+    "effect": "Deny"
+  }
+}'
+
+az policy definition create \
+  --name "restrict-standalone-vms" \
+  --display-name "Restrict Standalone Virtual Machines" \
+  --description "Prevents deployment of VMs unless they are part of an AKS node pool" \
+  --mode "Indexed" \
+  --rules "$vm_policy_rule"
+
+# Assign policy to subscription
+az policy assignment create \
+  --name "restrict-standalone-vms-assignment" \
+  --display-name "Restrict Standalone VMs Assignment" \
+  --policy "restrict-standalone-vms"
+
+echo "Standalone VM restriction policy created and assigned successfully."
+
+###############################################################################
 # Clone Git repo
 ###############################################################################
 git clone https://github.com/ArmDeveloperEcosystem/workshop-multiarch-aks.git multiarch
