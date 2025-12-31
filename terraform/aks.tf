@@ -9,7 +9,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   }
   default_node_pool {
     name       = "armpool"
-    vm_size    = "Standard_D2ps_v6"
+    vm_size    = "standard_b2pls_v2"
     node_count = var.agent_count
   }
   identity {
@@ -20,7 +20,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
 resource "azurerm_kubernetes_cluster_node_pool" "amdcluster" {
   name                  = "amdpool"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.k8s.id
-  vm_size               = "Standard_D2as_v5"
+  vm_size               = "standard_a2_v2"
   node_count            = var.agent_count
 
   tags = {
